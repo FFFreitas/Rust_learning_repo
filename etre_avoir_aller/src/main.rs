@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::io;
+use std::iter;
 
 fn main() {
     println!("Verbs Etre, Avoir and Aller");
@@ -23,14 +24,28 @@ fn main() {
         ("ils/elles", "ont"),
     ]);
 
+    let aller_verbs = HashMap::from([
+        ("je", "vais"),
+        ("tu", "vas"),
+        ("il/elle/on", "va"),
+        ("nous", "allons"),
+        ("vous", "allez"),
+        ("ils/elles", "vont"),
+    ]);
+
+    let repeated: String = iter::repeat("-*-").take(20).collect();
     for (a, b) in &etre_verbs {
         loop {
-            println!("{a}, {b}");
+            println!("complet pour le verbe etre");
+            println!("{a} ...");
             let mut verb_guess = String::new();
             io::stdin()
                 .read_line(&mut verb_guess)
-                .expect("Please give one of the verbs");
-            let verb_guess: String = verb_guess.trim().parse().expect("Please");
+                .expect("Veuillez fournir un verbe");
+            let verb_guess: String = match verb_guess.trim().parse() {
+                Ok(str) => str,
+                Err(_) => continue,
+            };
             match &verb_guess == b {
                 true => {
                     println!("{a} {verb_guess} est correct");
@@ -41,6 +56,50 @@ fn main() {
         }
     }
 
-    //println!("The verb is: {verb_guess}");
-    //println!("{:?}", pessoa);
+    println!("{:?}", &repeated);
+    for (a, b) in &avoir_verbs {
+        loop {
+            println!("complet pour le verbes avoir");
+            println!("{a} ...");
+            let mut verb_guess = String::new();
+            io::stdin()
+                .read_line(&mut verb_guess)
+                .expect("Veuillez fournir un verbe");
+            let verb_guess: String = match verb_guess.trim().parse() {
+                Ok(str) => str,
+                Err(_) => continue,
+            };
+            match &verb_guess == b {
+                true => {
+                    println!("{a} {verb_guess} est correct");
+                    break;
+                }
+                _ => println!("essayer a nouveau!"),
+            };
+        }
+    }
+
+    println!("{:?}", &repeated);
+    for (a, b) in &aller_verbs {
+        loop {
+            println!("complet pour le verbes aller");
+            println!("{a} ...");
+            let mut verb_guess = String::new();
+            io::stdin()
+                .read_line(&mut verb_guess)
+                .expect("Veuillez fournir un verbe");
+            let verb_guess: String = match verb_guess.trim().parse() {
+                Ok(str) => str,
+                Err(_) => continue,
+            };
+            match &verb_guess == b {
+                true => {
+                    println!("{a} {verb_guess} est correct");
+                    break;
+                }
+                _ => println!("essayer a nouveau!"),
+            };
+        }
+    }
+    println!("félicitations, tu as bien fait !")
 }
